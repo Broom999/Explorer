@@ -10,9 +10,12 @@ import random
 ev3 = EV3Brick()
 left_motor  = Motor(Port.A)
 right_motor = Motor(Port.D)
+Drill = Motor(Port.B)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=55.5, axle_track=104)
 
 obstacle_sensor = UltrasonicSensor(Port.S4)
+
+Drill.run(650)
 
 while True:
     distance = obstacle_sensor.distance()
@@ -22,6 +25,9 @@ while True:
         ev3.screen.clear()
         ev3.screen.print("Object detected!")
         ev3.screen.print("Dist: " + str(distance) + " mm")
+        
+        robot.drive(150, 0)
+        wait(500)
         random_angle = random.randint(-180, 180)
         ev3.speaker.beep()
 
@@ -33,7 +39,7 @@ while True:
 
     # Explorer
     # 1. The robot moves forward until it detects soomething then turns a random angle between -180 and 180 degrees and continues moving forward.
-    # 2. The robot should calculate how far the objec is, beep, then shortly afterwards turn a random angle and continue.
+    # 2. The robot should calculate how far the object is, beep, then shortly afterwards turn a random angle and continue.
     # 3. It should continue driving.
     # 4. 200 mm
     """ 5. 
